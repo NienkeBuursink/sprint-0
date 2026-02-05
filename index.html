@@ -5,15 +5,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Persoonlijke Website</title>
     <link rel="stylesheet" href="styles/style.css">
+    <script src="scripts/script.js" defer></script>
 </head>
 <body>
+    <section>
+        <h1>Welkom bij mijn site!</h1>
+        <label>
+            Welke mood?
+            <select>
+                <option value="wolk" selected>In de wolken☁️✨️</option>
+                <option value="feestje">Party!!🥳🎊</option>
+                <option value="boos">Laat me met rust💢😤</option>
+            </select>
+        </label>
+    </section>
     <div id="gitaar">
-        
         <div id="kop"></div>
         <div id="kam"></div>
         <div id="klankkast">
             <div id="klankgat"></div>
             <div id="brug"></div>
+        </div>
+        <div id="snaren">
+            <!-- divs toevoegen. id="lage-e-audio" voor de audio end id="lage-e-snaar" voor de div. via js foreach ids aan elkaar koppelen.-->
+            <audio id="lage-e-audio" class="snaar-audio" src="./assets/audio/lage-e.mp3"></audio>
+            <div id="lage-e-snaar" class="snaar"></div>
+
+            <audio id="a-audio" class="snaar-audio" src="./assets/audio/a.mp3"></audio>
+            <div id="a-snaar" class="snaar"></div>
+
+            <audio id="d-audio" class="snaar-audio" src="./assets/audio/d.mp3"></audio>
+            <div id="d-snaar" class="snaar"></div>
+
+            <audio id="g-audio" class="snaar-audio" src="./assets/audio/g.mp3"></audio>
+            <div id="g-snaar" class="snaar"></div>
+
+            <audio id="b-audio" class="snaar-audio" src="./assets/audio/b.mp3"></audio>
+            <div id="b-snaar" class="snaar"></div>
+
+            <audio id="hoge-e-audio" class="snaar-audio" src="./assets/audio/hoge-e.mp3"></audio>
+            <div id="hoge-e-snaar" class="snaar"></div>
         </div>
     </div>
 </body>

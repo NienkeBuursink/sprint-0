@@ -1,80 +1,182 @@
+@font-face {
+    font-family: 'gaming';
+    src: url(../assets/fonts/RetroGaming.ttf) format('truetype');
+}
+
+@font-face {
+    font-family: 'roboto';
+    src: url(../assets/fonts/Roboto-Regular.ttf) format('truetype');
+}
+
 :root{
-    --background-color: rgb(143, 209, 143);
-    --primary-color: rgb(182, 115, 9);
-    --accent-color: rgb(60, 4, 4);
-    --guitar-ratio: 5rem;
+    --primary-color: rgb(17, 54, 17);
+    --secondary-color: beige;
+    --g-primary-color: rgb(182, 115, 9);
+    --g-accent-color: rgb(60, 4, 4);
+    --g-ratio: 3rem;
+    --g-strings: grey;
+
 }
 
 div {
     display: block;
 }
 
-body{
-    display: grid;
-    place-content: center;
-    background-color: var(--background-color);
-    height: 100vh;
-    width: 100vw;
+html{
+    position: relative;
+	background-color: rgb(190, 229, 242);
+    background-attachment: fixed, scroll;
+    background-image: url(../assets/images/wolk.png), url(../assets/images/zon.png); /*https://nl.pngtree.com/free-sun-png, https://nl.vecteezy.com/gratis-png/wolken*/
+    background-size: cover, 40%;
+    background-attachment: scroll, fixed;
+    background-position: bottom, top right;
+    background-repeat: no-repeat;
+    /* https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Backgrounds_and_borders/Using_multiple_backgrounds */
 }
 
-#gitaar{
-    background-color: white;
-    display: flex;
-    flex-direction: column;
+html:has([value="feestje"]:checked){
+	background-color: rgb(243, 173, 243);
+    background-image: url(../assets/images/feestje-light.jpeg); /*background-image: url(/assets/videos/feestje.mp4);*/
+    background-attachment: fixed;
+}
+html:has([value="boos"]:checked){
+	background-color: rgb(255, 174, 0);
+    background-attachment: fixed;
+    background-position: bottom;
+    background-image: url(../assets/images/vlammen.png); /*https://nl.vecteezy.com/gratis-png/vuur*/
+    background-size: cover;
+    background-repeat: no-repeat;
     
 }
 
+h1,label,select,option{
+    color: var(--primary-color);
+    font-family: roboto, sans-serif;
+}
+
+section:first-of-type {
+    display: grid;
+    padding: 2em;
+    height: 80vh;
+    h1{
+        place-self: center;
+        text-align: center;
+        font-family: gaming, Impact, sans-serif;    
+        font-size: 3rem;
+        text-transform: uppercase;
+    }
+    label{
+        position: absolute;
+        padding: 1em;
+        border-radius: 1em;
+        margin: 1em;
+        select{
+            font-size: 1rem;
+            :target{
+                border: none;
+            }
+        }
+    }
+}
+
+#gitaar{
+    margin-bottom: var(--g-ratio);
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    place-self: center;
+    width: calc(var(--g-ratio)*6);
+    animation-timeline: view();
+    animation-name: rotate-guitar;
+    animation-range: entry;
+    animation-fill-mode: both;
+    transform-origin: center bottom;
+}
+
+@keyframes rotate-guitar{
+	0% {
+		transform: rotate(20deg);
+	} 
+	100%{
+		transform: rotate(-40deg);
+	}
+}
+
 #kop { /* https://css-tricks.com/the-shapes-of-css/ */
-  width: var(--guitar-ratio);
-  height: var(--guitar-ratio);
-  background: var(--primary-color);
+  width: var(--g-ratio);
+  height: calc(var(--g-ratio)*1.5);
+  background: var(--g-primary-color);
   position: relative;
   place-self: center;
 }
+
 #kop::before {
   content: "";
   position: absolute;
-  right: calc(var(--guitar-ratio));
-  border-top: 50px solid transparent;
-  border-bottom: 50px solid transparent;
-  border-right: 28.8675px solid var(--primary-color);
+  right: var(--g-ratio);
+  border-top: calc(var(--g-ratio) * 0.75) solid transparent;
+  border-bottom: calc(var(--g-ratio) * 0.75) solid transparent;
+  border-right: calc(var(--g-ratio) * 0.3) solid var(--g-primary-color);
 }
 #kop::after {
   content: "";
   position: absolute;
-  left: var(--guitar-ratio);
-  border-bottom: var(--guitar-ratio) solid transparent;
-  border-top: var(--guitar-ratio) solid transparent;
-  border-left: calc(var(--guitar-ratio)*0.5) solid var(--primary-color);
+  left: var(--g-ratio);
+  border-bottom: calc(var(--g-ratio) * 0.75) solid transparent;
+  border-top: calc(var(--g-ratio) * 0.75) solid transparent;
+  border-left: calc(var(--g-ratio) * 0.3) solid var(--g-primary-color);
 }
 
 
 #kam{
-    background-color: var(--accent-color);
-    aspect-ratio: 1/3;
-    height: calc(var(--guitar-ratio)*3);
-    width: calc(var(--guitar-ratio)*0.65);
+    background-color: var(--g-accent-color);
+    height: calc(var(--g-ratio)*4);
+    width: var(--g-ratio);
     place-self: center;
 }
 
 #klankkast{
     display: grid;
+    grid-template-rows: var(--g-ratio) var(--g-ratio) var(--g-ratio) var(--g-ratio);
     gap: 2em;
-    background-color: var(--primary-color);
-    padding: var(--guitar-ratio);
+    background-color: var(--g-primary-color);
+    padding: var(--g-ratio);
     border-radius: 45% 45% 50% 50% / 60% 60% 40% 40%; /* https://codepen.io/GodtiVinod/pen/KKKWPxy */
-    & #klankgat{
-        background-color: var(--accent-color);
-        aspect-ratio: 1;
-        width: var(--guitar-ratio);
+    #klankgat{
+        background-color: var(--g-accent-color);
+        grid-row: 2;
         place-self: center;
+        aspect-ratio: 1;
+        width: calc(var(--g-ratio));
+        
         border-radius: 50%;
-        border: solid rgb(226, 166, 88) calc(var(--guitar-ratio)* 0.1);
+        border: solid rgb(226, 166, 88) calc(var(--g-ratio)* 0.1);
     }
     & #brug{
-        background-color: var(--accent-color);
+        background-color: var(--g-accent-color);
+        grid-row: 3;
+        place-self: center;
         aspect-ratio: 5/1;
-        width: var(--guitar-ratio);
-        justify-self: center;
+        width: calc(var(--g-ratio));
+        
     }
+}
+
+.snaar {
+    position: absolute;
+    background-color: var(--g-strings);
+    height: 100%;
+    width: 2px;
+    place-self: center;
+    top: calc(var(--g-ratio)*1.5);
+    translate: calc(sibling-index() * 5px);
+}
+
+@keyframes rotate-guitar{
+	0% {
+		transform: rotate(-20deg);
+	} 
+	100% {
+		transform: rotate(20deg);
+	}
 }

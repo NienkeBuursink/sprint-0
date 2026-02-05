@@ -1,0 +1,80 @@
+:root{
+    --background-color: rgb(143, 209, 143);
+    --primary-color: rgb(182, 115, 9);
+    --accent-color: rgb(60, 4, 4);
+    --guitar-ratio: 5rem;
+}
+
+div {
+    display: block;
+}
+
+body{
+    display: grid;
+    place-content: center;
+    background-color: var(--background-color);
+    height: 100vh;
+    width: 100vw;
+}
+
+#gitaar{
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    
+}
+
+#kop { /* https://css-tricks.com/the-shapes-of-css/ */
+  width: var(--guitar-ratio);
+  height: var(--guitar-ratio);
+  background: var(--primary-color);
+  position: relative;
+  place-self: center;
+}
+#kop::before {
+  content: "";
+  position: absolute;
+  right: calc(var(--guitar-ratio));
+  border-top: 50px solid transparent;
+  border-bottom: 50px solid transparent;
+  border-right: 28.8675px solid var(--primary-color);
+}
+#kop::after {
+  content: "";
+  position: absolute;
+  left: var(--guitar-ratio);
+  border-bottom: var(--guitar-ratio) solid transparent;
+  border-top: var(--guitar-ratio) solid transparent;
+  border-left: calc(var(--guitar-ratio)*0.5) solid var(--primary-color);
+}
+
+
+#kam{
+    background-color: var(--accent-color);
+    aspect-ratio: 1/3;
+    height: calc(var(--guitar-ratio)*3);
+    width: calc(var(--guitar-ratio)*0.65);
+    place-self: center;
+}
+
+#klankkast{
+    display: grid;
+    gap: 2em;
+    background-color: var(--primary-color);
+    padding: var(--guitar-ratio);
+    border-radius: 45% 45% 50% 50% / 60% 60% 40% 40%; /* https://codepen.io/GodtiVinod/pen/KKKWPxy */
+    & #klankgat{
+        background-color: var(--accent-color);
+        aspect-ratio: 1;
+        width: var(--guitar-ratio);
+        place-self: center;
+        border-radius: 50%;
+        border: solid rgb(226, 166, 88) calc(var(--guitar-ratio)* 0.1);
+    }
+    & #brug{
+        background-color: var(--accent-color);
+        aspect-ratio: 5/1;
+        width: var(--guitar-ratio);
+        justify-self: center;
+    }
+}

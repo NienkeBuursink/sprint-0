@@ -9,22 +9,24 @@
 }
 
 :root{
-    --primary-color: rgb(17, 54, 17);
-    --secondary-color: beige;
+    color-scheme:light dark;
+    --primary-color:light-dark(rgb(190, 229, 242), rgb(15, 15, 76));
+    --secondary-color: light-dark(rgb(17, 54, 17), rgb(245, 245, 220));
+    --secondary-opposite: light-dark(rgba(245, 245, 220, 0.45), rgb(17, 54, 17, 0.45));
     --g-primary-color: rgb(182, 115, 9);
     --g-accent-color: rgb(60, 4, 4);
     --g-ratio: 3rem;
-    --g-strings: grey;
-
+    --g-strings: rgb(177, 177, 177);
 }
 
-div {
-    display: block;
-}
 
+
+/* ///////////////// */
+/* HTML backgrounds with prefers */
+/* ///////////////// */
 html{
     position: relative;
-	background-color: rgb(190, 229, 242);
+	background-color: var(--primary-color);
     background-attachment: fixed, scroll;
     background-image: url(../assets/images/wolk.png), url(../assets/images/zon.png); /*https://nl.pngtree.com/free-sun-png, https://nl.vecteezy.com/gratis-png/wolken*/
     background-size: cover, 40%;
@@ -34,42 +36,80 @@ html{
     /* https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Backgrounds_and_borders/Using_multiple_backgrounds */
 }
 
+@media (prefers-color-scheme: dark){
+    html{
+        background-image: url(../assets/images/wolk.png), url(../assets/images/maan.webp); /* https://nl.vecteezy.com/png/21183027-3d-halve-maan-maan-illustratie */
+        background-size: cover, 15%;
+        background-position: bottom, top 2em right 2em;
+    }
+}
+
+@media (prefers-contrast: more){
+    html{
+        background-image: none !important;
+    }
+}
+
 html:has([value="feestje"]:checked){
-	background-color: rgb(243, 173, 243);
+	background-color: light-dark(rgb(243, 173, 243), rgb(61, 15, 61));
     background-image: url(../assets/images/feestje-light.jpeg); /*background-image: url(/assets/videos/feestje.mp4);*/
     background-attachment: fixed;
 }
+
+@media (prefers-color-scheme: dark){
+    html:has([value="feestje"]:checked){
+        background-image: url(../assets/images/feestje-dark.jpg);
+    }
+}
+
 html:has([value="boos"]:checked){
-	background-color: rgb(255, 174, 0);
+	background-color: light-dark(rgb(255, 174, 0), rgb(120, 12, 0));
     background-attachment: fixed;
     background-position: bottom;
     background-image: url(../assets/images/vlammen.png); /*https://nl.vecteezy.com/gratis-png/vuur*/
     background-size: cover;
     background-repeat: no-repeat;
-    
 }
 
-h1,label,select,option{
-    color: var(--primary-color);
+
+
+/* ///////////////// */
+/* basic properties */
+/* ///////////////// */
+
+h1,label,select,option,button{
+    color: var(--secondary-color);
+    background-color: var(--secondary-opposite);
     font-family: roboto, sans-serif;
+    border-radius: .3em;
+
 }
 
+select, button{
+    cursor: pointer;
+}
+
+
+
+/* ///////////////// */
+/* HERO section */
+/* ///////////////// */
 section:first-of-type {
     display: grid;
-    padding: 2em;
+    padding: 1rem;
     height: 80vh;
     h1{
+        grid-row: 2/4;
         place-self: center;
         text-align: center;
         font-family: gaming, Impact, sans-serif;    
         font-size: 3rem;
         text-transform: uppercase;
+        padding: .5rem 2rem;
     }
     label{
         position: absolute;
-        padding: 1em;
-        border-radius: 1em;
-        margin: 1em;
+        padding: 1rem;
         select{
             font-size: 1rem;
             :target{
@@ -77,12 +117,40 @@ section:first-of-type {
             }
         }
     }
+    button{
+        grid-row: 4;
+        border: none;
+        background-color: var(--secondary-opposite);
+        width: var(--g-ratio);
+        aspect-ratio: 1;
+        justify-self: center;
+        animation: float 1s infinite alternate-reverse ease-in-out;
+        svg{
+            filter: invert(14%) sepia(13%) saturate(3538%) hue-rotate(74deg) brightness(93%) contrast(91%); /*http://change-svg-color.vercel.app/*/
+        }
+        @media (prefers-color-scheme: dark){
+            svg{
+                filter: invert(96%) sepia(13%) saturate(570%) hue-rotate(332deg) brightness(108%) contrast(92%);
+            }
+        }
+    }
 }
 
+
+/* ///////////////// */
+/* Guitar styling */
+/* ///////////////// */
 #gitaar{
     margin-bottom: var(--g-ratio);
     position: relative;
-    display: flex;
+    display: grid;
+    grid-template-rows: 
+        calc(var(--g-ratio)*1.5) 
+        calc(var(--g-ratio)*4) 
+        var(--g-ratio)
+        var(--g-ratio)
+        var(--g-ratio)
+        calc(var(--g-ratio)*3);
     flex-direction: column;
     place-self: center;
     width: calc(var(--g-ratio)*6);
@@ -90,24 +158,17 @@ section:first-of-type {
     animation-name: rotate-guitar;
     animation-range: entry;
     animation-fill-mode: both;
-    transform-origin: center bottom;
-}
-
-@keyframes rotate-guitar{
-	0% {
-		transform: rotate(20deg);
-	} 
-	100%{
-		transform: rotate(-40deg);
-	}
+    div{
+        grid-column: 1;
+        height: 100%;
+        place-self: center;
+    }
 }
 
 #kop { /* https://css-tricks.com/the-shapes-of-css/ */
   width: var(--g-ratio);
-  height: calc(var(--g-ratio)*1.5);
   background: var(--g-primary-color);
   position: relative;
-  place-self: center;
 }
 
 #kop::before {
@@ -127,56 +188,78 @@ section:first-of-type {
   border-left: calc(var(--g-ratio) * 0.3) solid var(--g-primary-color);
 }
 
-
 #kam{
+    grid-row: 2/4;
+    z-index: 2;
     background-color: var(--g-accent-color);
-    height: calc(var(--g-ratio)*4);
     width: var(--g-ratio);
-    place-self: center;
 }
 
 #klankkast{
-    display: grid;
-    grid-template-rows: var(--g-ratio) var(--g-ratio) var(--g-ratio) var(--g-ratio);
-    gap: 2em;
+    grid-row: 3/7;
     background-color: var(--g-primary-color);
-    padding: var(--g-ratio);
+    width: calc(var(--g-ratio)*5);
     border-radius: 45% 45% 50% 50% / 60% 60% 40% 40%; /* https://codepen.io/GodtiVinod/pen/KKKWPxy */
-    #klankgat{
-        background-color: var(--g-accent-color);
-        grid-row: 2;
-        place-self: center;
-        aspect-ratio: 1;
-        width: calc(var(--g-ratio));
+}   
+
+#klankgat{
+    grid-row: 4;
+    z-index: 3;
+    background-color: var(--g-accent-color);
+    aspect-ratio: 1;
+    width: calc(var(--g-ratio));  
+    border-radius: 50%;
+    border: solid rgb(226, 166, 88) calc(var(--g-ratio)* 0.1);
+}
+
+#brug{
+    grid-row: 5;
+    height: calc(var(--g-ratio)*0.2) !important;
+    background-color: var(--g-accent-color);
+    align-self: end !important;
+    aspect-ratio: 5/1;
+    width: calc(var(--g-ratio));
         
-        border-radius: 50%;
-        border: solid rgb(226, 166, 88) calc(var(--g-ratio)* 0.1);
-    }
-    & #brug{
-        background-color: var(--g-accent-color);
-        grid-row: 3;
+}
+
+#snaren{
+    grid-row: 2/6;
+    z-index: 4;
+    display: flex;
+    justify-content: space-around;
+    width: var(--g-ratio);
+    .snaar {
+        background-color: var(--g-strings);
+        height: 100%;
+        width: 2px;
         place-self: center;
-        aspect-ratio: 5/1;
-        width: calc(var(--g-ratio));
-        
     }
 }
 
-.snaar {
-    position: absolute;
-    background-color: var(--g-strings);
-    height: 100%;
-    width: 2px;
-    place-self: center;
-    top: calc(var(--g-ratio)*1.5);
-    translate: calc(sibling-index() * 5px);
+
+
+
+/* ///////////////// */
+/* animations */
+/* ///////////////// */
+@media (prefers-reduced-motion: no-preference){
+    @keyframes rotate-guitar{
+        0% {
+            transform: rotate(-25deg);
+        } 
+        100%{
+            transform: rotate(25deg);
+        }
+    }
+
+    @keyframes float{
+        0% {
+            transform: translateY(-1em);
+        }
+        100% {
+            transform: translateY(1em);
+        }
+    }
 }
 
-@keyframes rotate-guitar{
-	0% {
-		transform: rotate(-20deg);
-	} 
-	100% {
-		transform: rotate(20deg);
-	}
-}
+

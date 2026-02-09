@@ -12,7 +12,7 @@
     color-scheme:light dark;
     --primary-color:light-dark(rgb(190, 229, 242), rgb(15, 15, 76));
     --secondary-color: light-dark(rgb(17, 54, 17), rgb(245, 245, 220));
-    --secondary-opposite: light-dark(rgba(245, 245, 220, 0.45), rgb(17, 54, 17, 0.45));
+    --secondary-opposite: light-dark(rgba(245, 245, 220, 0.5), rgb(17, 54, 17, 0.5));
     --g-primary-color: rgb(182, 115, 9);
     --g-accent-color: rgb(60, 4, 4);
     --g-ratio: 3rem;
@@ -34,6 +34,12 @@ html{
     background-position: bottom, top right;
     background-repeat: no-repeat;
     /* https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Backgrounds_and_borders/Using_multiple_backgrounds */
+}
+
+@media (prefers-reduced-motion: no-preference){
+    html{
+        scroll-behavior: smooth;
+    }
 }
 
 @media (prefers-color-scheme: dark){
@@ -76,8 +82,7 @@ html:has([value="boos"]:checked){
 /* ///////////////// */
 /* basic properties */
 /* ///////////////// */
-
-h1,label,select,option,button{
+h1,label,select,option,a,form{
     color: var(--secondary-color);
     background-color: var(--secondary-opposite);
     font-family: roboto, sans-serif;
@@ -85,7 +90,7 @@ h1,label,select,option,button{
 
 }
 
-select, button{
+select, label{
     cursor: pointer;
 }
 
@@ -117,9 +122,8 @@ section:first-of-type {
             }
         }
     }
-    button{
+    a{
         grid-row: 4;
-        border: none;
         background-color: var(--secondary-opposite);
         width: var(--g-ratio);
         aspect-ratio: 1;
@@ -238,6 +242,56 @@ section:first-of-type {
 
 
 
+/* ///////////////// */
+/* guitar section */
+/* ///////////////// */
+#gitaar-section{
+    display: grid;
+}
+
+form{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 8em);
+    gap: 1em;
+    padding: 1em;
+    justify-content: center;
+    place-items: center;
+    p{
+        grid-column: 1/-1;
+        justify-self: center;
+        margin: 1em;
+        text-align: center;
+    }
+    label{
+        background-color: transparent;
+        display: flex;
+        flex-direction: column-reverse;
+        place-self: center;
+        place-items: center;
+        margin: .5em;
+        aspect-ratio: 1;
+        input[type='radio']{
+            appearance: none;
+            padding: 1.5em;
+            border-radius: 50%;
+        }
+    }
+    label:has(:checked){
+        scale: 1.3;
+        input[type='radio']{
+            border: solid var(--secondary-color) 2px;
+        }
+    }   
+}
+
+@media (prefers-reduced-motion: no-preference){
+    label{
+        transition: scale .2s;
+    }
+}
+
+
+
 
 /* ///////////////// */
 /* animations */
@@ -245,7 +299,7 @@ section:first-of-type {
 @media (prefers-reduced-motion: no-preference){
     @keyframes rotate-guitar{
         0% {
-            transform: rotate(-25deg);
+            transform: rotate(-40deg);
         } 
         100%{
             transform: rotate(25deg);
@@ -263,3 +317,29 @@ section:first-of-type {
 }
 
 
+/* ///////////////// */
+/* responsive */
+/* ///////////////// */
+@media (min-width: 700px){
+    #gitaar-section{
+        grid-template-columns: 1.5fr 1fr;
+        form{
+            width: 100%;
+            max-width: 450px;
+        }
+    }
+}
+
+@media (min-width: 950px){
+    #gitaar-section{
+        grid-template-columns: 1fr 1fr;
+        #gitaar{
+            justify-self: end;
+            align-self: center;
+            margin-right: 5em;
+        }
+        form{
+            max-width: 450px;
+        }
+    }
+}

@@ -82,7 +82,7 @@ html:has([value="boos"]:checked){
 /* ///////////////// */
 /* basic properties */
 /* ///////////////// */
-h1,label,select,option,a,form{
+h1,label,select,option,a,form, button{
     color: var(--secondary-color);
     background-color: var(--secondary-opposite);
     font-family: roboto, sans-serif;
@@ -90,7 +90,7 @@ h1,label,select,option,a,form{
 
 }
 
-select, label{
+select, label, button{
     cursor: pointer;
 }
 
@@ -197,14 +197,36 @@ section:first-of-type {
     z-index: 2;
     background-color: var(--g-accent-color);
     width: var(--g-ratio);
+    view-transition-name: match-element;
+    view-transition-class: sticker;
 }
 
 #klankkast{
+    position: relative;
     grid-row: 3/7;
+    overflow: hidden;
     background-color: var(--g-primary-color);
     width: calc(var(--g-ratio)*5);
     border-radius: 45% 45% 50% 50% / 60% 60% 40% 40%; /* https://codepen.io/GodtiVinod/pen/KKKWPxy */
+    img {
+        position: absolute;
+        max-width: calc(var(--g-ratio)*2);
+        view-transition-name: match-element;
+        view-transition-class: sticker;
+    }
 }   
+
+/* cyd cursus stickers */
+::view-transition-group(*) {
+	animation-fill-mode: both;
+}
+
+::view-transition-new(.sticker):only-child{
+	animation-name: scale-in;
+	animation-timing-function: transition(transform 0.6s cubic-bezier(0.33, 1, 0.68, 1));
+}
+
+
 
 #klankgat{
     grid-row: 4;
@@ -214,15 +236,20 @@ section:first-of-type {
     width: calc(var(--g-ratio));  
     border-radius: 50%;
     border: solid rgb(226, 166, 88) calc(var(--g-ratio)* 0.1);
+    view-transition-name: match-element;
+    view-transition-class: sticker;
 }
 
 #brug{
     grid-row: 5;
+    z-index: 3;
     height: calc(var(--g-ratio)*0.2) !important;
     background-color: var(--g-accent-color);
     align-self: end !important;
     aspect-ratio: 5/1;
     width: calc(var(--g-ratio));
+    view-transition-name: match-element;
+    view-transition-class: sticker;
         
 }
 
@@ -232,10 +259,15 @@ section:first-of-type {
     display: flex;
     justify-content: space-around;
     width: var(--g-ratio);
+    view-transition-name: match-element;
+    view-transition-class: sticker;
     .snaar {
         background-color: var(--g-strings);
         height: 100%;
         width: 2px;
+        margin: 0;
+        padding: 0;
+        border: none;
         place-self: center;
     }
 }
@@ -291,6 +323,16 @@ form{
 }
 
 
+/* ///////////////// */
+/* sticker button */
+/* ///////////////// */
+#more-stickers{
+    position: fixed;
+    padding: .5em 1em;
+    border: solid var(--secondary-color);
+    bottom: 0;
+    left: 0;
+}
 
 
 /* ///////////////// */
@@ -302,7 +344,7 @@ form{
             transform: rotate(-40deg);
         } 
         100%{
-            transform: rotate(25deg);
+            transform: rotate(10deg);
         }
     }
 
@@ -314,6 +356,15 @@ form{
             transform: translateY(1em);
         }
     }
+
+    @keyframes scale-in {
+        from{
+            scale: 0;
+        }
+        to{
+            scale:1;
+        }
+    }
 }
 
 
@@ -322,11 +373,7 @@ form{
 /* ///////////////// */
 @media (min-width: 700px){
     #gitaar-section{
-        grid-template-columns: 1.5fr 1fr;
-        form{
-            width: 100%;
-            max-width: 450px;
-        }
+        grid-template-columns: 1.3fr 1fr;
     }
 }
 
@@ -337,9 +384,6 @@ form{
             justify-self: end;
             align-self: center;
             margin-right: 5em;
-        }
-        form{
-            max-width: 450px;
         }
     }
 }

@@ -22,7 +22,7 @@
 
 
 /* ///////////////// */
-/* HTML backgrounds with prefers */
+/* MARK: Prefers backgrounds HTML 
 /* ///////////////// */
 html{
     position: relative;
@@ -80,14 +80,14 @@ html:has([value="boos"]:checked){
 
 
 /* ///////////////// */
-/* basic properties */
+/* MARK: Basic properties
 /* ///////////////// */
-h1,label,select,option,a,form, button{
+h1,label,select,option,a,form,button{
     color: var(--secondary-color);
     background-color: var(--secondary-opposite);
     font-family: roboto, sans-serif;
+    font-size: 1rem;
     border-radius: .3em;
-
 }
 
 select, label, button{
@@ -97,7 +97,7 @@ select, label, button{
 
 
 /* ///////////////// */
-/* HERO section */
+/* MARK: HERO section
 /* ///////////////// */
 section:first-of-type {
     display: grid;
@@ -116,7 +116,6 @@ section:first-of-type {
         position: absolute;
         padding: 1rem;
         select{
-            font-size: 1rem;
             :target{
                 border: none;
             }
@@ -142,9 +141,9 @@ section:first-of-type {
 
 
 /* ///////////////// */
-/* Guitar styling */
+/* MARK: Guitar styling
 /* ///////////////// */
-#gitaar{
+gitaar{
     margin-bottom: var(--g-ratio);
     position: relative;
     display: grid;
@@ -162,37 +161,38 @@ section:first-of-type {
     animation-name: rotate-guitar;
     animation-range: entry;
     animation-fill-mode: both;
-    div{
+    kop, kam, klankkast, klankgat, brug, snaren{
+        display: block;
         grid-column: 1;
         height: 100%;
         place-self: center;
     }
 }
 
-#kop { /* https://css-tricks.com/the-shapes-of-css/ */
-  width: var(--g-ratio);
-  background: var(--g-primary-color);
-  position: relative;
+kop { /* https://css-tricks.com/the-shapes-of-css/ */
+    width: var(--g-ratio);
+    background: var(--g-primary-color);
+    position: relative;
 }
 
-#kop::before {
-  content: "";
-  position: absolute;
-  right: var(--g-ratio);
-  border-top: calc(var(--g-ratio) * 0.75) solid transparent;
-  border-bottom: calc(var(--g-ratio) * 0.75) solid transparent;
-  border-right: calc(var(--g-ratio) * 0.3) solid var(--g-primary-color);
+kop::before {
+    content: "";
+    position: absolute;
+    right: var(--g-ratio);
+    border-top: calc(var(--g-ratio) * 0.75) solid transparent;
+    border-bottom: calc(var(--g-ratio) * 0.75) solid transparent;
+    border-right: calc(var(--g-ratio) * 0.3) solid var(--g-primary-color);
 }
-#kop::after {
-  content: "";
-  position: absolute;
-  left: var(--g-ratio);
-  border-bottom: calc(var(--g-ratio) * 0.75) solid transparent;
-  border-top: calc(var(--g-ratio) * 0.75) solid transparent;
-  border-left: calc(var(--g-ratio) * 0.3) solid var(--g-primary-color);
+kop::after {
+    content: "";
+    position: absolute;
+    left: var(--g-ratio);
+    border-bottom: calc(var(--g-ratio) * 0.75) solid transparent;
+    border-top: calc(var(--g-ratio) * 0.75) solid transparent;
+    border-left: calc(var(--g-ratio) * 0.3) solid var(--g-primary-color);
 }
 
-#kam{
+kam{
     grid-row: 2/4;
     z-index: 2;
     background-color: var(--g-accent-color);
@@ -201,7 +201,7 @@ section:first-of-type {
     view-transition-class: sticker;
 }
 
-#klankkast{
+klankkast{
     position: relative;
     grid-row: 3/7;
     overflow: hidden;
@@ -210,7 +210,7 @@ section:first-of-type {
     border-radius: 45% 45% 50% 50% / 60% 60% 40% 40%; /* https://codepen.io/GodtiVinod/pen/KKKWPxy */
     img {
         position: absolute;
-        max-width: calc(var(--g-ratio)*2);
+        max-width: calc(var(--g-ratio)*1.5);
         view-transition-name: match-element;
         view-transition-class: sticker;
     }
@@ -228,7 +228,7 @@ section:first-of-type {
 
 
 
-#klankgat{
+klankgat{
     grid-row: 4;
     z-index: 3;
     background-color: var(--g-accent-color);
@@ -240,7 +240,7 @@ section:first-of-type {
     view-transition-class: sticker;
 }
 
-#brug{
+brug{
     grid-row: 5;
     z-index: 3;
     height: calc(var(--g-ratio)*0.2) !important;
@@ -253,10 +253,10 @@ section:first-of-type {
         
 }
 
-#snaren{
+snaren{
     grid-row: 2/6;
     z-index: 4;
-    display: flex;
+    display: flex !important;
     justify-content: space-around;
     width: var(--g-ratio);
     view-transition-name: match-element;
@@ -275,7 +275,7 @@ section:first-of-type {
 
 
 /* ///////////////// */
-/* guitar section */
+/* MARK: Guitar section
 /* ///////////////// */
 #gitaar-section{
     display: grid;
@@ -324,7 +324,7 @@ form{
 
 
 /* ///////////////// */
-/* sticker button */
+/* MARK: Sticker button
 /* ///////////////// */
 #more-stickers{
     position: fixed;
@@ -336,15 +336,21 @@ form{
 
 
 /* ///////////////// */
-/* animations */
+/* MARK: Animations
 /* ///////////////// */
 @media (prefers-reduced-motion: no-preference){
     @keyframes rotate-guitar{
         0% {
-            transform: rotate(-40deg);
+            transform: rotate(-20deg);
+        } 
+        30% {
+            transform: rotate(-20deg);
+        } 
+        50% {
+            transform: rotate(20deg);
         } 
         100%{
-            transform: rotate(10deg);
+            transform: rotate(0deg);
         }
     }
 
@@ -369,7 +375,7 @@ form{
 
 
 /* ///////////////// */
-/* responsive */
+/* MARK: Responsive
 /* ///////////////// */
 @media (min-width: 700px){
     #gitaar-section{

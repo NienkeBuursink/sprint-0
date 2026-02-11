@@ -1,32 +1,32 @@
+////////////////////
+//MARK: Variabelen
+////////////////////
 const snaren = document.querySelectorAll('.snaar');
 const sections = document.querySelectorAll('section');
 const heroSection = sections[0];
 const colorForm = document.querySelector('form');
+const moreStickersButton = document.querySelector('#more-stickers');
+const stickerContainer = document.querySelector('#klankkast');
+const head = document.querySelector('head')
 
-
-////////////////////
-//functions aanroepen
-////////////////////
-insertPerson();
-insertColorButtons();
 
 
 ////////////////////
-//geluidjes maken
+//MARK: Geluidjes maken
 ////////////////////
 snaren.forEach((snaar) => {
     ['mouseover', 'click'].forEach(event => // array met events voor hover op desktop en click op desktop en mobile
-        snaar.addEventListener(event, function(e) {
+        snaar.addEventListener(event, function() {
             let snaarAudio = snaar.nextElementSibling; // sibling die direct onder de div staat, dus audio
-            // console.log(snaarAudio)
             snaarAudio.play();
         })
     );
 });
 
 
+
 ////////////////////
-//h1 invullen
+//MARK: H1 invullen
 ////////////////////
 async function insertPerson() {
   	const baseURL = 'https://fdnd.directus.app/items';
@@ -34,7 +34,7 @@ async function insertPerson() {
 	const url = baseURL + endpoint;
 
   	let response = await fetch(url);
-	const result = await response.json();
+	let result = await response.json();
 	
 	let personHTML = `<h1>Welkom op de site van ${result.data.name}!</h1>`;
 
@@ -42,8 +42,9 @@ async function insertPerson() {
 };
 
 
+
 ////////////////////
-//kleur buttons
+//MARK: Kleur buttons
 ////////////////////
 async function insertColorButtons() {
     const baseURL = 'https://fdnd.directus.app/items';
@@ -51,7 +52,7 @@ async function insertColorButtons() {
     const url = baseURL + endpoint;
 
     let response = await fetch(url);
-    const results = await response.json();
+    let results = await response.json();
 
     const validResults = results.data.filter(result => result.fav_color !== '#000000');
 
@@ -63,9 +64,9 @@ async function insertColorButtons() {
         return array;
     }
 
-    const randomisedResults = shuffleArray(validResults);
+    let randomisedResults = shuffleArray(validResults);
 
-    const limitedResults = randomisedResults.slice(0, 8);
+    let limitedResults = randomisedResults.slice(0, 8);
     
     limitedResults.forEach((result) =>{
         let buttonHTML = 
@@ -93,9 +94,14 @@ async function insertColorButtons() {
     });  
 };  
 
+colorForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+})
+
+
 
 ////////////////////
-//stickers cursus van Cyd
+//MARK: Stickers cursus van Cyd
 ////////////////////
 const stickers = [
     "assets/images/stickers/mier.png",
@@ -112,12 +118,7 @@ const stickers = [
     "assets/images/stickers/locatie.png",
 ];
 
-let activeIndex = 0;
-
-const moreStickersButton = document.querySelector("#more-stickers");
-const stickerContainer = document.querySelector("#klankkast");
-
-moreStickersButton.addEventListener("click", () => {
+moreStickersButton.addEventListener('click', () => {
 	if (document.startViewTransition) {
 		document.startViewTransition(() => {
 			getRandomSticker();
@@ -133,24 +134,25 @@ const getRandomSticker = () => {
 	const stickerElement = document.createElement("img");
 	stickerElement.src = sticker;
 	stickerElement.alt = "";
-	const imageSize = 96;
+	const imageSize = 72; //width van images in pixelgrootte
+
 	// get random position within stickersContainer bounds
-	const bounds = stickerContainer.getBoundingClientRect();
-    const safeSpace = 16;
+	const bounds = stickerContainer.getBoundingClientRect(); // afmetingen opvragen stickerContainer
 
-
-	let randomX = Math.floor(Math.random() * (bounds.width - imageSize));
-
-    if (randomX > bounds.width - imageSize - safeSpace) {
-        randomX = bounds.width - imageSize - safeSpace
-        stickerElement.style.border = 'yellow 1px solid'
-    }
-
-
-	const randomY = Math.floor(Math.random() * (bounds.height - imageSize));
+	let randomX = Math.floor(Math.random() * (bounds.width - imageSize)); // - imageSize zodat de sticker niet buiten beeld valt
+    const randomY = Math.floor(Math.random() * (bounds.height - imageSize));
     const randomRotation = Math.floor(Math.random() * 360);
+
 	stickerElement.style.left = `${randomX}px`;
 	stickerElement.style.top = `${randomY}px`;
 	stickerElement.style.rotate = `${randomRotation}deg`;
-	stickerContainer.appendChild(stickerElement);
+	stickerContainer.appendChild(stickerElement); //stickerElement wordt een child element van stickerContainer(klankkast)
 };
+
+
+
+////////////////////
+//MARK: Functions aanroepen
+////////////////////
+insertPerson();
+insertColorButtons();

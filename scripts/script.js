@@ -6,7 +6,7 @@ const sections = document.querySelectorAll('section');
 const heroSection = sections[0];
 const colorForm = document.querySelector('form');
 const moreStickersButton = document.querySelector('#more-stickers');
-const stickerContainer = document.querySelector('#klankkast');
+const stickerContainer = document.querySelector('klankkast');
 const head = document.querySelector('head')
 
 
@@ -101,7 +101,7 @@ colorForm.addEventListener('submit', (event) => {
 
 
 ////////////////////
-//MARK: Stickers cursus van Cyd
+//MARK: Stickers cursus view transitions van Cyd
 ////////////////////
 const stickers = [
     "assets/images/stickers/mier.png",
@@ -115,7 +115,7 @@ const stickers = [
     "assets/images/stickers/palet.png",
     "assets/images/stickers/mensen.png",
     "assets/images/stickers/navigatie.png",
-    "assets/images/stickers/locatie.png",
+    "assets/images/stickers/locatie.png"
 ];
 
 moreStickersButton.addEventListener('click', () => {
@@ -130,25 +130,42 @@ moreStickersButton.addEventListener('click', () => {
 
 const getRandomSticker = () => {
 	const randomIndex = Math.floor(Math.random() * stickers.length);
+
 	const sticker = stickers[randomIndex];
 	const stickerElement = document.createElement("img");
 	stickerElement.src = sticker;
 	stickerElement.alt = "";
 	const imageSize = 72; //width van images in pixelgrootte
 
+    const wrapper = document.createElement("div");
+    wrapper.classList.add("sticker-wrapper");
+    wrapper.appendChild(stickerElement);
+
+
 	// get random position within stickersContainer bounds
 	const bounds = stickerContainer.getBoundingClientRect(); // afmetingen opvragen stickerContainer
 
-	let randomX = Math.floor(Math.random() * (bounds.width - imageSize)); // - imageSize zodat de sticker niet buiten beeld valt
+    const randomX = Math.floor(Math.random() * (bounds.width - imageSize));
     const randomY = Math.floor(Math.random() * (bounds.height - imageSize));
+
     const randomRotation = Math.floor(Math.random() * 360);
 
 	stickerElement.style.left = `${randomX}px`;
 	stickerElement.style.top = `${randomY}px`;
-	stickerElement.style.rotate = `${randomRotation}deg`;
-	stickerContainer.appendChild(stickerElement); //stickerElement wordt een child element van stickerContainer(klankkast)
+	stickerElement.style.transform = `rotate(${randomRotation}deg)`;
+	stickerContainer.appendChild(wrapper); //stickerElement wordt een child element van stickerContainer(klankkast)
 };
 
+    // voor het geval dat ik toch liever safe spaces doe ->
+    // const safeSpace = 16;
+
+    // const minX = safeSpace;
+    // const maxX = bounds.width - imageSize - safeSpace;
+    // const minY = safeSpace;
+    // const maxY = bounds.height - imageSize - safeSpace;
+
+    // const randomX = Math.random() * (maxX - minX) + minX;
+    // const randomY = Math.random() * (maxY - minY) + minY;
 
 
 ////////////////////

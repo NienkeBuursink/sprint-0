@@ -90,7 +90,7 @@ h1,label,select,option,a,form,button{
     border-radius: .3em;
 }
 
-select, label, button{
+select, label, button, input{
     cursor: pointer;
 }
 
@@ -161,7 +161,7 @@ gitaar{
     animation-name: rotate-guitar;
     animation-range: entry;
     animation-fill-mode: both;
-    kop, kam, klankkast, klankgat, brug, snaren{
+    kop, kam, klankkast, #klankkast-overlay, klankgat, brug, snaren{
         display: block;
         grid-column: 1;
         height: 100%;
@@ -198,23 +198,30 @@ kam{
     background-color: var(--g-accent-color);
     width: var(--g-ratio);
     view-transition-name: match-element;
-    view-transition-class: sticker;
 }
 
 klankkast{
     position: relative;
     grid-row: 3/7;
-    overflow: hidden;
     background-color: var(--g-primary-color);
     width: calc(var(--g-ratio)*5);
     border-radius: 45% 45% 50% 50% / 60% 60% 40% 40%; /* https://codepen.io/GodtiVinod/pen/KKKWPxy */
-    img {
+    .sticker-wrapper {
         position: absolute;
-        max-width: calc(var(--g-ratio)*1.5);
+        width: 100%;
+        height: 100%;
+        border-radius: inherit; /* zelfde als klankkast */
+        overflow: hidden;
         view-transition-name: match-element;
         view-transition-class: sticker;
+        img {
+            position: absolute;
+            max-width: calc(var(--g-ratio)*1.5);
+        }
     }
 }   
+
+
 
 /* cyd cursus stickers */
 ::view-transition-group(*) {
@@ -237,7 +244,6 @@ klankgat{
     border-radius: 50%;
     border: solid rgb(226, 166, 88) calc(var(--g-ratio)* 0.1);
     view-transition-name: match-element;
-    view-transition-class: sticker;
 }
 
 brug{
@@ -248,9 +254,7 @@ brug{
     align-self: end !important;
     aspect-ratio: 5/1;
     width: calc(var(--g-ratio));
-    view-transition-name: match-element;
-    view-transition-class: sticker;
-        
+    view-transition-name: match-element;     
 }
 
 snaren{
@@ -260,7 +264,6 @@ snaren{
     justify-content: space-around;
     width: var(--g-ratio);
     view-transition-name: match-element;
-    view-transition-class: sticker;
     .snaar {
         background-color: var(--g-strings);
         height: 100%;
@@ -334,6 +337,9 @@ form{
     left: 0;
 }
 
+#more-stickers:hover{
+    text-decoration-line: underline;
+}
 
 /* ///////////////// */
 /* MARK: Animations
